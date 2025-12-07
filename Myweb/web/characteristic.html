@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的特点展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #8BC34A;
+            --accent: #FF9800;
+            --dark: #1A237E;
+            --light: #F5F5F5;
+            --text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), #283593);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-content {
+            padding: 25px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-desc {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* 2×2图片画廊 */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* 保持正方形 */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .img-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .img-caption {
+            opacity: 1;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .image-gallery {
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                padding-bottom: 80%; /* 手机端稍微瘦长一些 */
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1>我的特点展示</h1>
+    <p class="subtitle">吃、睡、滑板、滑雪 - 这就是我！</p>
+</header>
+
+<div class="container">
+    <div class="features">
+        <!-- 吃 -->
+        <div class="feature-card">
+            <div class="feature-content">
+                <h2 class="feature-title">
+                    <i class="fas fa-utensils"></i> 吃
+                </h2>
+                <p class="feature-desc">
+                    我是一个美食爱好者，喜欢探索各种美味佳肴，从街头小吃到精致料理，总能找到满足味蕾的惊喜。
+                </p>
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/eat1.png" alt="美食1" class="gallery-img">
+                        <div class="img-caption">美食1</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/eat2.jpeg" alt="美食2" class="gallery-img">
+                        <div class="img-caption">美食2</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/eat3.jpeg" alt="美食3" class="gallery-img">
+                        <div class="img-caption">美食3</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/eat4.jpeg" alt="美食4" class="gallery-img">
+                        <div class="img-caption">美食4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 睡 -->
+        <div class="feature-card">
+            <div class="feature-content">
+                <h2 class="feature-title">
+                    <i class="fas fa-bed"></i> 睡
+                </h2>
+                <p class="feature-desc">
+                    高质量的睡眠对我来说至关重要，我深知休息对身心健康的重要性，也享受着每次舒适的睡眠时光。
+                </p>
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/sleep1.png" alt="睡眠1" class="gallery-img">
+                        <div class="img-caption">睡眠1</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/sleep2.png" alt="睡眠2" class="gallery-img">
+                        <div class="img-caption">睡眠2</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/sleep3.png" alt="睡眠3" class="gallery-img">
+                        <div class="img-caption">睡眠3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滑板 -->
+        <div class="feature-card">
+            <div class="feature-content">
+                <h2 class="feature-title">
+                    <i class="fas fa-skating"></i> 滑板
+                </h2>
+                <p class="feature-desc">
+                    滑板是我探索城市的方式，我喜欢在街头滑行，感受风在耳边呼啸的快感。
+                </p>
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/skateboard.png" alt="滑板" class="gallery-img">
+                        <div class="img-caption">滑板</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滑雪 -->
+        <div class="feature-card">
+            <div class="feature-content">
+                <h2 class="feature-title">
+                    <i class="fas fa-skiing"></i> 滑雪
+                </h2>
+                <p class="feature-desc">
+                    滑雪让我感受到速度与激情的结合，在雪山上驰骋是我最爱的冬季活动。
+                </p>
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="../image/characteristic/ski.png" alt="滑雪" class="gallery-img">
+                        <div class="img-caption">滑雪</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <a href="../index.html" class="back-btn">返回主页</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 我的特点展示</p>
+</footer>
+
+<script>
+    // 图片预览功能
+    document.querySelectorAll('.gallery-img').forEach(img => {
+        img.addEventListener('click', function() {
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '2000';
+            modal.style.cursor = 'zoom-out';
+
+            const modalImg = document.createElement('img');
+            modalImg.src = this.src;
+            modalImg.style.maxWidth = '90%';
+            modalImg.style.maxHeight = '90%';
+            modalImg.style.objectFit = 'contain';
+
+            modal.appendChild(modalImg);
+            document.body.appendChild(modal);
+
+            modal.addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+        });
+    });
+</script>
+</body>
+</html>

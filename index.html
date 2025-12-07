@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人主页</title>
+    <style>
+        /* ===== 1. 变量 ===== */
+        :root {
+            --theme: #4CAF50;
+            --theme-light: #81C784;
+            --theme-dark: #388E3C;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text: #222;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --radius: 20px;
+        }
+        [data-theme="dark"] {
+            --glass: rgba(0, 0, 0, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text: #f0f0f0;
+        }
+
+        /* ===== 2. 修复背景图问题 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+            background:
+                    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                    url('./image/个人主页.jpg') center/cover fixed;  /* 关键修复：background-attachment: fixed */
+            animation: zoom 30s infinite alternate ease-in-out;
+        }
+
+        /* 背景遮罩层，增强可读性 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: -1;
+        }
+
+        @keyframes zoom {
+            0% { background-size: 100% auto; }
+            100% { background-size: 110% auto; }
+        }
+
+        /* ===== 3. 顶部导航 ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+        .logo-wrap { display: flex; align-items: center; gap: 20px; }
+        header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        header h1 {
+            font-size: 1.5em;
+            color: var(--theme-dark);
+            margin: 0;
+        }
+        #themeToggle {
+            font-size: 1.8em;
+            cursor: pointer;
+            user-select: none;
+            transition: transform .3s;
+        }
+        #themeToggle:hover { transform: rotate(30deg); }
+
+        /* ===== 4. 主容器 - 解决背景图滚动问题 ===== */
+        .main-container {
+            min-height: 100vh;
+            padding: 100px 20px 50px; /* 顶部留出导航空间 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== 5. 中央玻璃卡片 ===== */
+        .card {
+            width: 100%;
+            max-width: 900px;
+            padding: 40px 50px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 6. 头像 + 按钮横排 ===== */
+        .headline {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .headline img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+            animation: pulse 4s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .link-button {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--theme), var(--theme-dark));
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== 7. 视频区域 ===== */
+        .video-section {
+            margin: 20px 0;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 20px 0;
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+            max-height: 400px;
+            object-fit: cover;
+        }
+        .video-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .video-btn {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .video-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* ===== 8. 文字区域 ===== */
+        section h2 {
+            color: var(--theme-dark);
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--theme-light)
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            margin: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        li::before {
+            content: "•";
+            color: var(--theme);
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        /* ===== 9. 底部链接 ===== */
+        .bottom-links a {
+            color: var(--theme-dark);
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .bottom-links a:hover {
+            color: var(--theme);
+            text-decoration: underline;
+        }
+
+        /* ===== 10. 响应式 ===== */
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px 20px;
+                margin: 20px;
+            }
+            .headline {
+                flex-direction: column;
+                text-align: center;
+            }
+            .links {
+                justify-content: center;
+            }
+            header {
+                padding: 10px 20px;
+            }
+            header h1 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo-wrap">
+
+        <div>
+            <h1>我的个人主页</h1>
+        </div>
+    </div>
+    <span id="themeToggle" title="切换深色/浅色">🌙</span>
+</header>
+
+<!-- 主容器 -->
+<div class="main-container">
+    <!-- 中央玻璃卡片 -->
+    <div class="card">
+        <section class="headline">
+            <img src="./image/hsy.jpg" alt="头像">
+            <div>
+                <h2>关于我</h2>
+                <p>一个过山车爱好者，唱歌、跳舞、说唱，除了打篮球</p>
+                <div class="links">
+                    <a href="./web/experience.html" class="link-button">生活片段</a>
+                    <a href="./web/qinghai.html" class="link-button">我的家乡</a>
+                    <a href="./web/huazhong.html" class="link-button">我的学校</a>
+                    <a href="./web/characteristic.html" class="link-button">特长展示</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新增视频区域 -->
+        <section class="video-section">
+            <h2>我的精彩瞬间</h2>
+            <p>记录生活中的美好时刻，分享我的热情与活力</p>
+            <div class="video-container">
+                <!-- 本地视频文件路径 -->
+                <video id="myVideo" autoplay muted loop playsinline>
+                    <!-- 使用您本地的视频文件 -->
+                    <source src="./image/index/introduction.mp4" type="video/mp4">
+                    <source src="./image/index/introduction.mp4" type="video/webm">
+                    您的浏览器不支持视频播放，请尝试使用现代浏览器。
+                </video>
+                <div class="video-controls">
+                    <button class="video-btn" id="playPauseBtn" title="播放/暂停">⏸️</button>
+                    <button class="video-btn" id="muteBtn" title="静音/取消静音">🔇</button>
+                </div>
+            </div>
+        </section>
+
+
+<!--        &lt;!&ndash; 新增图片展示区域 &ndash;&gt;-->
+<!--        <section>-->
+<!--            <h2>我的相册</h2>-->
+<!--            <p>记录生活中的美好瞬间</p>-->
+<!--            <div class="image-gallery">-->
+<!--                &lt;!&ndash; 这里可以添加您的5张图片 &ndash;&gt;-->
+<!--                <p>广州塔夜景、城市立交、雪山风光、城市黄昏、经幡艺术装置</p>-->
+<!--            </div>-->
+<!--        </section>-->
+
+        <section class="bottom-links">
+            <h2>联系我</h2>
+            <p>邮箱：3561313606@qq.com</p>
+            <p>GitHub：<a href="https://github.com/Kaze911" target="_blank">https://github.com/Kaze911</a></p>
+<!--            <p><a href="https://yamihaha.github.io/MyWeb/web/dorm.html" target="_blank">返回寝室主页</a></p>-->
+        </section>
+    </div>
+</div>
+
+<script>
+    /* 一键深色 */
+    const toggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') turnDark(); else turnLight();
+    toggle.addEventListener('click', () => {
+        html.getAttribute('data-theme') === 'dark' ? turnLight() : turnDark();
+    });
+    function turnDark() {
+        html.setAttribute('data-theme', 'dark');
+        toggle.textContent = '☀';
+        localStorage.setItem('theme', 'dark');
+    }
+    function turnLight() {
+        html.removeAttribute('data-theme');
+        toggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+    }
+
+    /* 视频控制 */
+    const video = document.getElementById('myVideo');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // 播放/暂停控制
+    playPauseBtn.addEventListener('click', function() {
+        if (video.paused) {
+            video.play();
+            playPauseBtn.textContent = '⏸️';
+        } else {
+            video.pause();
+            playPauseBtn.textContent = '▶️';
+        }
+    });
+
+    // 静音控制
+    muteBtn.addEventListener('click', function() {
+        if (video.muted) {
+            video.muted = false;
+            muteBtn.textContent = '🔇';
+        } else {
+            video.muted = true;
+            muteBtn.textContent = '🔊';
+        }
+    });
+
+    // 确保视频自动播放
+    document.addEventListener('DOMContentLoaded', function() {
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // 自动播放成功
+                playPauseBtn.textContent = '⏸️';
+            }).catch(error => {
+                // 自动播放被阻止
+                console.log('自动播放被阻止:', error);
+                playPauseBtn.textContent = '▶️';
+
+                // 添加用户交互后播放的提示
+                document.addEventListener('click', function initVideo() {
+                    video.play();
+                    playPauseBtn.textContent = '⏸️';
+                    document.removeEventListener('click', initVideo);
+                }, { once: true });
+            });
+        }
+    });
+</script>
+</body>
+</html>
